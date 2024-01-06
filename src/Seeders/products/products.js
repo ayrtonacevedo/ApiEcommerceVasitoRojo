@@ -19,7 +19,7 @@
 const PRODUCTS = [
   {
     model: "",
-    volume: 750.0, // Volumen en mililitros (ml)
+    volume: "750.0 ml", // Volumen en mililitros (ml)
     sales_format: "Unidad", // Por ejemplo: Botella, Lata, etc.
     unit_per_pack: 1, // Unidades por paquete
     price: 13.144, // Precio en la moneda correspondiente
@@ -35,3 +35,4 @@ const PRODUCTS = [
     brand: "Rutini",
   },
 ];
+module.exports = { PRODUCTS };

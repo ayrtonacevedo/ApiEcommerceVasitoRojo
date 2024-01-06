@@ -1,32 +1,16 @@
 const { Categories } = require("../../db");
 
-// const createCategory = async (name, description, image) => {
-//   let exists = await Categories.findOne({
-//     where: {
-//       name: name,
-//     },
-//   });
-//   if (exists) {
-//     return exists;
-//   } else {
-//     return await Categories.create({
-//       name: name.toUpperCase(),
-//       description: description || null,
-//       image: image || null,
-//     });
-//   }
-// };
-const createCategory = async (name, description, image) => {
+const createCategory = async (category, description, image) => {
   let exists = await Categories.findOne({
     where: {
-      name: name,
+      name: category,
     },
   });
   if (exists) {
     return exists;
   } else {
     return await Categories.create({
-      name: name.toUpperCase(),
+      name: category.toUpperCase(),
       description: description || null,
       image: image || null,
     });

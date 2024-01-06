@@ -17,13 +17,13 @@ const createProduct = async (
   category,
   brand
 ) => {
-  let category = await createCategory(category);
-  let brand = await createBrands(brand);
+  let productCategory = await createCategory(category);
+  let productBrand = await createBrands(brand);
 
   let exits = await Products.findOne({
     where: {
       model: model,
-      volume: parseFloat(volume),
+      volume: volume,
       sales_format: sales_format,
       unit_per_pack: parseInt(unit_per_pack),
       price: parseFloat(price),
@@ -40,7 +40,7 @@ const createProduct = async (
 
   let product = await Products.create({
     model: model,
-    volume: parseFloat(volume),
+    volume: volume,
     sales_format: sales_format,
     unit_per_pack: parseInt(unit_per_pack),
     price: parseFloat(price),
@@ -49,9 +49,9 @@ const createProduct = async (
     images: images,
     stock: parseInt(stock),
   });
-  await product.setCategories(category);
-  await product.setBrands(brand);
-  product.save();
+  await product.setCategory(productCategory);
+  await product.setBrand(productBrand);
+  // product.save();
   return { flag: true, message: " Product created!" };
 };
 module.exports = { createProduct };

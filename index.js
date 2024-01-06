@@ -4,11 +4,13 @@ const {
   seederCategories,
 } = require("./src/Seeders/categories/categories.seeder.js");
 const { seederBrands } = require("./src/Seeders/brands/brands.seeders.js");
+const { seederProducts } = require("./src/Seeders/products/products.seeder.js");
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
     seederCategories();
     seederBrands();
+    seederProducts();
   });
 });

@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       volume: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       sales_format: {
