@@ -17,22 +17,22 @@ const updateProduct = async (
   brand
 ) => {
   let product = await Products.findByPk(id);
-  model ? (product.model = model) : model;
+  product.model = model || null;
   volume ? (product.volume = parseFloat(volume)) : volume;
   sales_format ? (sales_format = sales_format) : sales_format;
   unit_per_pack ? (unit_per_pack = parseInt(unit_per_pack)) : unit_per_pack;
   price ? (product.price = parseFloat(price)) : price;
-  store ? (product.store = store) : store;
-  variety ? (product.variety = variety) : variety;
-  images ? (product.images = images) : images;
+  product.store = store || null;
+  product.variety = variety || null;
+  product.images = images || null;
   stock ? (product.stock = parseInt(stock)) : stock;
   if (category) {
     let cat = await createCategory(category);
-    await product.setCategories(cat);
+    await product.setCategory(cat);
   }
   if (brand) {
     let bra = await createBrands(brand);
-    await product.setBrands(bra);
+    await product.setBrand(bra);
   }
   product.save();
   return { flag: true, message: " The product was modified!" };

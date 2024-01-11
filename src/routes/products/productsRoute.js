@@ -42,14 +42,22 @@ router.post("/", async(req,res,next)=>{
     }
 })
 
-router.put("/:id", async(req,res,next)=>{
-    let { model,volume,sales_format,unit_per_pack,price,store,variety,images,stock,category,brand}=req.body
-    let {id}=req.params
+router.put("/:id", async (req, res, next) => {
+    let { model, volume, sales_format, unit_per_pack, price, store, variety, images, stock, category, brand } = req.body;
+    let { id } = req.params;
+  
     try {
-        let modifiedProduct= await updateProduct(id,model,volume,sales_format,unit_per_pack,price,store,variety,images,stock,category,brand)
-        modifiedProduct.flag ? res.send(modifiedProduct.message)
-        :res.send(modifiedProduct.message)
-    } catch (error) { next(error)}
-})
+      let modifiedProduct = await updateProduct(id, model, volume, sales_format, unit_per_pack, price, store, variety, images, stock, category, brand);
+  
+      if (modifiedProduct.flag) {
+        res.send({ success: true, message: "Product updated successfully." });
+      } else {
+        res.status(404).send({ success: false, message: "Product not found or couldn't be updated.", error: "Custom error message" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  });
+  
 
 module.exports=router
