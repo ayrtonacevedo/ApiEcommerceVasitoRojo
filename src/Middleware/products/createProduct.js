@@ -1,4 +1,4 @@
-const { Products } = require("../../db");
+const { Products, Categories } = require("../../db");
 const {
   createCategory,
 } = require("../../Middleware/categories/createCategory");
@@ -17,8 +17,19 @@ const createProduct = async (
   category,
   brand
 ) => {
-  let productCategory = await createCategory(category);
+  let productCategory;
   let productBrand = await createBrands(brand);
+
+  const existingCategory = await Categories.findOne({
+    where: {
+      name: category.toUpperCase(),
+    },
+  });
+  if (existingCategory) {
+    productCategory = existingCategory;
+  } else {
+    productCategory = await createCategory(category);
+  }
 
   let exits = await Products.findOne({
     where: {
@@ -51,6 +62,7 @@ const createProduct = async (
   });
   await product.setCategory(productCategory);
   await product.setBrand(productBrand);
+
   // product.save();
   return { flag: true, message: " Product created!" };
 };

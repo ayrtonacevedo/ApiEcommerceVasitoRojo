@@ -1,28 +1,63 @@
 const { Categories } = require("../../db");
 
-const createCategory = async(category, description, image)=>{
+// const createCategory = async (category, description, image) => {
+//   try {
+//     // Search if the category already exists
+//     let existingCategory = await Categories.findOne({
+//       where: {
+//         name: category.toUpperCase(),
+//       },
+//     });
+//     // If the category already exists, return it
+//     if (existingCategory) {
+//       return existingCategory;
+//     }
+//     // If the category does not exist, create it
+//     let newCategory = await Categories.create({
+//       name: category.toUpperCase(),
+//       description: description || null,
+//       image: image || null,
+//     });
+//     return newCategory;
+//   } catch (error) {
+//     //Handle any errors here
+//     console.error("Error creating category:", error);
+//     throw new Error("Error creating category");
+//   }
+// };
+// module.exports = { createCategory };
+const createCategory = async (category, description, image) => {
   try {
-    // Search if the category already exists
+    // Normaliza el nombre de la categoría antes de buscarla en la base de datos
+    const categoryName = category.toUpperCase();
+
+    // Busca si la categoría ya existe
     let existingCategory = await Categories.findOne({
-      where:{
-        name:category.toUpperCase() 
-      }
-    })
-    // If the category already exists, return it
-    if(existingCategory){
-      return existingCategory
+      where: {
+        name: categoryName,
+      },
+    });
+
+    // Si la categoría ya existe, devuelve la categoría existente
+    if (existingCategory) {
+      //console.log(`Category '${category}' already exists`);
+      return existingCategory;
     }
-    // If the category does not exist, create it
+
+    // Si la categoría no existe, crea una nueva categoría
     let newCategory = await Categories.create({
-      name: category.toUpperCase(),
-      description:description || null,
-      image:image || null 
-    })
-    return newCategory
+      name: categoryName,
+      description: description || null,
+      image: image || null,
+    });
+
+    //console.log(`Category '${category}' created successfully`);
+    return newCategory;
   } catch (error) {
-    //Handle any errors here
+    // Maneja cualquier error aquí
     console.error("Error creating category:", error);
     throw new Error("Error creating category");
   }
-}
+};
+
 module.exports = { createCategory };
