@@ -1,4 +1,4 @@
-const { Users, Roles } = require("../../db");
+const { Users, Roles, Orders, Products } = require("../../db");
 
 const getUsers = async () => {
   try {
@@ -55,5 +55,55 @@ const getUserById = async (id) => {
     throw error; // Lanza el error para que pueda ser manejado en un nivel superior si es necesario
   }
 };
+const getOrdersByUserId = async (userId) => {
+  try {
+    const orders = await Orders.findAll({
+      where: { userId: userId },
+      include: [
+        {
+          model: Users,
+          attributes: ["id", "name", "email"],
+        },
+        {
+          model: Products,
+          attributes: ["id", "model"],
+          through: {
+            attributes: ["quantity"],
+          },
+        },
+      ],
+    });
 
-module.exports = { getUsers, getUserById };
+    const formattedOrders = orders.map((order) => ({
+      id: order.id,
+      date: order.date,
+      time: order.time,
+      paymentMethod: order.paymentMethod,
+      subTotal: order.subTotal,
+      paid: order.paid,
+      status: order.status,
+      address: order.address,
+      floor: order.floor,
+      department: order.department,
+      indications: order.indications,
+      assignedCadet: order.assignedCadet,
+      user: {
+        id: order.user.id,
+        name: order.user.name,
+        email: order.user.email,
+      },
+      products: order.products.map((product) => ({
+        productId: product.id,
+        productName: product.model,
+        productQuantity: product.ordersproducts.quantity,
+      })),
+    }));
+
+    return formattedOrders;
+  } catch (error) {
+    throw new Error(
+      `Error fetching orders for user with ID ${userId}: ${error.message}`
+    );
+  }
+};
+module.exports = { getUsers, getUserById, getOrdersByUserId };
