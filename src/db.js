@@ -51,8 +51,18 @@ Products.belongsTo(Brands); // Un 'Producto' tiene una sola 'Marca'
 Roles.hasMany(Users); // Un "rol" tiene muchos "usuarios"
 Users.belongsTo(Roles); // Un "usuario" tiene un solo "rol"
 
-Orders.belongsToMany(Products, { through: "orderproduct" });
-Products.belongsToMany(Orders, { through: "orderproduct" });
+const OrderProduct = sequelize.define(
+  "ordersproducts",
+  {
+    quantity: Sequelize.INTEGER, // Define el campo 'quantity' en la tabla intermedia
+  },
+  {
+    timestamps: false,
+  }
+);
+Orders.belongsToMany(Products, { through: OrderProduct });
+Products.belongsToMany(Orders, { through: OrderProduct });
+
 Users.hasMany(Orders); // Un "User" tiene muchas "Orders"
 Orders.belongsTo(Users); // Una "Orders" tiene un "Users"
 

@@ -55,7 +55,7 @@ const createProduct = async (
     sales_format: sales_format,
     unit_per_pack: parseInt(unit_per_pack),
     price: parseFloat(price),
-    store: store,
+    store: store || "-",
     variety: variety,
     images: images,
     stock: parseInt(stock),

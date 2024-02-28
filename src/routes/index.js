@@ -5,6 +5,7 @@ const categories = require("./categories/categoriesRoute");
 const brands = require("./brands/brandsRoute");
 const products = require("./products/productsRoute");
 const users = require("./users/usersRouter");
+const orders = require("./orders/ordersRoute");
 
 const router = Router();
 // Configurar los routers
@@ -13,5 +14,6 @@ router.use("/categories", categories);
 router.use("/brands", brands);
 router.use("/products", products);
 router.use("/users", users);
+router.use("/orders", orders);
 
 module.exports = router;

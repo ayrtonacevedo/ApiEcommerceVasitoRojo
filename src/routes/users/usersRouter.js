@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const { getUsers, getUserById } = require("../../Middleware/users/getUsers");
 const { createUser } = require("../../Middleware/users/createUsers");
-const { Users, Roles } = require("../../db");
 const { updateUser } = require("../../Middleware/users/updateUsers");
+const { getOrdersByUserId } = require("../../Middleware/users/getUsers");
 
 const router = Router();
 
@@ -85,6 +85,16 @@ router.put("/:id", async (req, res, next) => {
         errors: result.errors,
       });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:userId/orders", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const userOrders = await getOrdersByUserId(userId);
+    res.json(userOrders);
   } catch (error) {
     next(error);
   }
