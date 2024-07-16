@@ -1,21 +1,24 @@
 const BRANDS = [
   {
-    name: "Patagonia",
+    name: "PATAGONIA",
   },
   {
-    name: "Corona",
+    name: "CORONA",
   },
   {
-    name: "Beefeater",
+    name: "BEEFEATER",
   },
   {
-    name: "Bombay",
+    name: "BOMBAY",
   },
   {
-    name: "Absolut",
+    name: "ABSOLUT",
   },
   {
-    name: "Grey Goose",
+    name: "GREY GOOSE",
+  },
+  {
+    name: "BRANCA",
   },
 ];
 module.exports = { BRANDS };

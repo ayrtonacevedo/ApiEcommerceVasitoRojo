@@ -1,5 +1,8 @@
 const { Router } = require("express");
-const { getCategories } = require("../../Middleware/categories/getCategory");
+const {
+  getCategories,
+  getCategoryWithProductsAndBrands,
+} = require("../../Middleware/categories/getCategory");
 const {
   createCategory,
 } = require("../../Middleware/categories/createCategory");
@@ -24,6 +27,16 @@ router.post("/", async (req, res, next) => {
       : res.send("Problem adding category");
   } catch (error) {
     next(error);
+  }
+});
+// Ruta para obtener todas las categorías con sus productos y marcas asociadas
+router.get("/brands", async (req, res) => {
+  try {
+    const categoriesWithProductsAndBrands =
+      await getCategoryWithProductsAndBrands();
+    res.send(categoriesWithProductsAndBrands);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

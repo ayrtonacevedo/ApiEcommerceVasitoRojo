@@ -1,8 +1,9 @@
 const { Products, Categories, Brands } = require("../../db");
 
-const getProducts = async () =>
- {
-  let products = await Products.findAll({include: [{ model: Categories }, { model: Brands }]})
+const getProducts = async () => {
+  let products = await Products.findAll({
+    include: [{ model: Categories }, { model: Brands }],
+  });
 
   let allProducts = [];
 
@@ -18,8 +19,8 @@ const getProducts = async () =>
       variety: p.variety,
       images: p.images,
       stock: p.stock,
-      category: p.category.name,
-      brand: p.brand.name,
+      category: p.category,
+      brand: p.brand,
     });
   });
   return allProducts;
@@ -49,4 +50,4 @@ const getProductById = async (id) => {
   return product;
 };
 
-module.exports={getProducts, getProductById};
+module.exports = { getProducts, getProductById };
